@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Bot, User } from "lucide-react";
+import { MessageCircle, X, Send, Bot } from "lucide-react";
 import { chatbotResponses } from "@/lib/data";
 
 interface Message {
@@ -46,6 +46,7 @@ export default function Chatbot() {
   ]);
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const idCounterRef = useRef(0);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -53,8 +54,9 @@ export default function Chatbot() {
 
   const sendMessage = (text: string) => {
     if (!text.trim()) return;
+    const userId = ++idCounterRef.current;
     const userMsg: Message = {
-      id: `u-${Date.now()}`,
+      id: `u-${userId}`,
       text: text.trim(),
       sender: "user",
     };
@@ -63,8 +65,9 @@ export default function Chatbot() {
 
     // Bot response with delay
     setTimeout(() => {
+      const botId = ++idCounterRef.current;
       const botMsg: Message = {
-        id: `b-${Date.now()}`,
+        id: `b-${botId}`,
         text: getResponse(text),
         sender: "bot",
       };

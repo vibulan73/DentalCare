@@ -10,7 +10,6 @@ import {
   Activity,
   Crown,
   Sparkles,
-  X,
   Check,
   ArrowRight,
 } from "lucide-react";

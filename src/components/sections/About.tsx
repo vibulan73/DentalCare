@@ -41,11 +41,6 @@ function AnimatedCounter({
     return () => clearInterval(timer);
   }, [inView, target]);
 
-  const formatted =
-    target >= 1000
-      ? `${(count / 1000).toFixed(count >= target ? 0 : 0)}k`
-      : count.toString();
-
   return (
     <span>
       {target >= 1000 ? `${Math.floor(count / 1000)}k` : count}

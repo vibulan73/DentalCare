@@ -1,6 +1,6 @@
 "use client";
 
-import { Phone, MapPin, Mail, ArrowUp } from "lucide-react";
+import { Phone, MapPin, ArrowUp } from "lucide-react";
 import { locations, services } from "@/lib/data";
 
 const quickLinks = [

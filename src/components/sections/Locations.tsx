@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import {
@@ -12,7 +12,7 @@ import {
   XCircle,
 } from "lucide-react";
 import { locations } from "@/lib/data";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 function isCurrentlyOpen(
@@ -61,18 +61,18 @@ function isCurrentlyOpen(
   return { open: false, message: "Closed Now" };
 }
 
+function initializeStatuses() {
+  const s: Record<string, { open: boolean; message: string }> = {};
+  locations.forEach((loc) => {
+    s[loc.id] = isCurrentlyOpen(loc.hours);
+  });
+  return s;
+}
+
 export default function Locations() {
   const [activeTab, setActiveTab] = useState(locations[0].id);
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [statuses, setStatuses] = useState<Record<string, { open: boolean; message: string }>>({});
-
-  useEffect(() => {
-    const s: Record<string, { open: boolean; message: string }> = {};
-    locations.forEach((loc) => {
-      s[loc.id] = isCurrentlyOpen(loc.hours);
-    });
-    setStatuses(s);
-  }, []);
+  const [statuses] = useState<Record<string, { open: boolean; message: string }>>(initializeStatuses);
 
   const activeLoc = locations.find((l) => l.id === activeTab) || locations[0];
   const status = statuses[activeLoc.id] || { open: false, message: "Loading..." };

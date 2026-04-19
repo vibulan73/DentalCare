@@ -6,6 +6,8 @@ import { Menu, Phone, CalendarDays } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle } from "@/components/ui/sheet";
+import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
 
 const navLinks = [
   { label: "Home", href: "#home" },
@@ -21,6 +23,8 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,7 +50,11 @@ export default function Navbar() {
 
   const scrollToSection = (href: string) => {
     const id = href.replace("#", "");
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    if (pathname === "/") {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      router.push("/" + href);
+    }
   };
 
   return (
@@ -142,14 +150,15 @@ export default function Navbar() {
               <span className="hidden md:inline">416-292-7004</span>
             </a>
 
-            <Button
-              onClick={() => scrollToSection("#booking")}
-              size="sm"
-              className="gradient-teal text-white border-0 rounded-xl btn-ripple hover:opacity-90 gap-1.5 shadow-lg shadow-teal-500/20"
-            >
-              <CalendarDays className="w-4 h-4" />
-              <span className="hidden sm:inline">Book Now</span>
-            </Button>
+            <Link href="/book">
+              <Button
+                size="sm"
+                className="gradient-teal text-white border-0 rounded-xl btn-ripple hover:opacity-90 gap-1.5 shadow-lg shadow-teal-500/20"
+              >
+                <CalendarDays className="w-4 h-4" />
+                <span className="hidden sm:inline">Book Now</span>
+              </Button>
+            </Link>
 
             {/* Mobile Menu */}
             <Sheet>
@@ -217,13 +226,14 @@ export default function Navbar() {
                   <div className="p-4 border-t border-border space-y-3">
                     <SheetClose
                       render={
-                        <Button
-                          onClick={() => scrollToSection("#booking")}
-                          className="w-full gradient-teal text-white border-0 rounded-xl btn-ripple"
-                        >
-                          <CalendarDays className="w-4 h-4 mr-2" />
-                          Book Appointment
-                        </Button>
+                        <Link href="/book" className="w-full">
+                          <Button
+                            className="w-full gradient-teal text-white border-0 rounded-xl btn-ripple"
+                          >
+                            <CalendarDays className="w-4 h-4 mr-2" />
+                            Book Appointment
+                          </Button>
+                        </Link>
                       }
                     />
                     <a

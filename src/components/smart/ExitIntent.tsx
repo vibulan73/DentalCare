@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Gift, CalendarDays } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function ExitIntent() {
+  const router = useRouter();
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -90,9 +92,7 @@ export default function ExitIntent() {
             <Button
               onClick={() => {
                 dismiss();
-                document
-                  .getElementById("booking")
-                  ?.scrollIntoView({ behavior: "smooth" });
+                router.push("/book");
               }}
               className="w-full gradient-teal text-white border-0 rounded-xl py-6 text-base btn-ripple hover:opacity-90 gap-2 shadow-lg"
             >

@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { services, serviceCategories, type Service } from "@/lib/data";
+import { useRouter } from "next/navigation";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   SmilePlus,
@@ -36,6 +37,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 export default function Services() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const router = useRouter();
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   const filtered =
@@ -205,9 +207,7 @@ export default function Services() {
                 <Button
                   onClick={() => {
                     setSelectedService(null);
-                    document
-                      .getElementById("booking")
-                      ?.scrollIntoView({ behavior: "smooth" });
+                    router.push("/book");
                   }}
                   className="w-full gradient-teal text-white border-0 rounded-xl py-6 text-base btn-ripple hover:opacity-90 transition-opacity"
                 >

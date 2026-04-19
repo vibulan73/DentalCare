@@ -2,16 +2,17 @@
 
 import { Phone, MapPin, ArrowUp } from "lucide-react";
 import { locations, services } from "@/lib/data";
+import Link from "next/link";
 
 const quickLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About Us", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Our Team", href: "#team" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Book Appointment", href: "#booking" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/#home" },
+  { label: "About Us", href: "/#about" },
+  { label: "Services", href: "/#services" },
+  { label: "Our Team", href: "/#team" },
+  { label: "Gallery", href: "/#gallery" },
+  { label: "Testimonials", href: "/#testimonials" },
+  { label: "Book Appointment", href: "/book" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Footer() {
@@ -70,12 +71,12 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <a
+                  <Link
                     href={link.href}
                     className="text-slate-400 text-sm hover:text-dental-teal-light transition-colors"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -92,12 +93,12 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {services.map((s) => (
                 <li key={s.id}>
-                  <a
-                    href="#services"
+                  <Link
+                    href="/#services"
                     className="text-slate-400 text-sm hover:text-dental-teal-light transition-colors"
                   >
                     {s.title}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

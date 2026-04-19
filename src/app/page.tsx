@@ -9,7 +9,6 @@ import Team from "@/components/sections/Team";
 import Locations from "@/components/sections/Locations";
 import Gallery from "@/components/sections/Gallery";
 import Testimonials from "@/components/sections/Testimonials";
-import Booking from "@/components/sections/Booking";
 import Blog from "@/components/sections/Blog";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
@@ -37,7 +36,6 @@ export default function HomePage() {
         <Locations />
         <Gallery />
         <Testimonials />
-        <Booking />
         <Blog />
         <Contact />
       </main>

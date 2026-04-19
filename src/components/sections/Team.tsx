@@ -6,14 +6,17 @@ import { useInView } from "react-intersection-observer";
 import {
   ChevronLeft,
   ChevronRight,
-  Link,
+  ExternalLink,
   CalendarDays,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { doctors } from "@/lib/data";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Team() {
+  const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -160,11 +163,7 @@ export default function Team() {
                       <div className="flex items-center gap-3">
                         <Button
                           size="sm"
-                          onClick={() =>
-                            document
-                              .getElementById("booking")
-                              ?.scrollIntoView({ behavior: "smooth" })
-                          }
+                          onClick={() => router.push("/book")}
                           className="flex-1 gradient-teal text-white border-0 rounded-xl btn-ripple hover:opacity-90 transition-opacity text-xs"
                         >
                           <CalendarDays className="w-3.5 h-3.5 mr-1" />
@@ -174,7 +173,7 @@ export default function Team() {
                           href={doctor.social.linkedin || "#"}
                           className="w-9 h-9 rounded-xl border border-border flex items-center justify-center hover:bg-dental-teal hover:text-white hover:border-dental-teal transition-all"
                         >
-                          <Link className="w-4 h-4" />
+                          <ExternalLink className="w-4 h-4" />
                         </a>
                       </div>
                     </div>

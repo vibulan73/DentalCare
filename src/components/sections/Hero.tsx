@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { Star, MapPin, Trophy, Phone, CalendarDays } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -14,10 +15,6 @@ export default function Hero() {
   });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
-  const scrollToBooking = () => {
-    document.getElementById("booking")?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <section
@@ -111,14 +108,15 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
         >
-          <Button
-            onClick={scrollToBooking}
-            size="lg"
-            className="btn-ripple gradient-teal text-white px-8 py-6 text-lg rounded-2xl shadow-lg shadow-teal-500/30 hover:shadow-xl hover:shadow-teal-500/40 hover:scale-105 transition-all duration-300 gap-2 border-0"
-          >
-            <CalendarDays className="w-5 h-5" />
-            Book Appointment
-          </Button>
+          <Link href="/book">
+            <Button
+              size="lg"
+              className="btn-ripple gradient-teal text-white px-8 py-6 text-lg rounded-2xl shadow-lg shadow-teal-500/30 hover:shadow-xl hover:shadow-teal-500/40 hover:scale-105 transition-all duration-300 gap-2 border-0"
+            >
+              <CalendarDays className="w-5 h-5" />
+              Book Appointment
+            </Button>
+          </Link>
           <a
             href="tel:416-292-7004"
             className={cn(

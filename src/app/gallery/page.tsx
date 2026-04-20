@@ -7,6 +7,7 @@ import { X, ZoomIn, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
+import PageHero from "@/components/sections/PageHero";
 
 const galleryImages = [
   { id: 1, src: "/images/hero-bg.png", alt: "Modern Clinic Reception", category: "clinic" },
@@ -42,34 +43,15 @@ export default function GalleryPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-20 sm:pt-24">
-        <section className="relative py-24">
+      <PageHero
+        title="Gallery"
+        subtitle="Before & after transformations and our clinic results"
+      />
+      <main className="min-h-screen">
+        <section className="relative py-12 bg-muted/30">
           <div className="section-padding">
-            {/* Header */}
-            <motion.div
-              ref={ref}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-16"
-            >
-              <span className="inline-block text-sm font-semibold tracking-wider uppercase text-dental-teal mb-3">
-                Gallery
-              </span>
-              <h1
-                className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6"
-                style={{ fontFamily: "'Outfit', sans-serif" }}
-              >
-                See Our <span className="gradient-text">Clinic & Results</span>
-              </h1>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Take a virtual tour of our modern facilities and see the amazing
-                smile transformations we&apos;ve achieved.
-              </p>
-            </motion.div>
-
             {/* Before/After Slider */}
-            <motion.div
+            <motion.div ref={ref}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}

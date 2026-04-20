@@ -145,9 +145,9 @@ export default function Navbar() {
           </div>
 
           {/* Right Side */}
-          <div className="flex items-center gap-3">
-            {/* Phone Dropdown */}
-            <div className="relative hidden sm:inline-flex">
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Phone Dropdown - Visible on all screens */}
+            <div className="relative inline-flex">
               <button
                 onClick={() => setPhoneDropdownOpen(!phoneDropdownOpen)}
                 className={cn(

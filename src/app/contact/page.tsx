@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { locations } from "@/lib/data";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
+import PageHero from "@/components/sections/PageHero";
 
 export default function ContactPage() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -46,33 +47,14 @@ export default function ContactPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-20 sm:pt-24">
-        <section className="relative py-24">
+      <PageHero
+        title="Contact Us"
+        subtitle="Get in touch with our clinics across Toronto and surrounding areas"
+      />
+      <main className="min-h-screen">
+        <section className="relative py-12 bg-muted/30">
           <div className="section-padding">
-            {/* Header */}
-            <motion.div
-              ref={ref}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-16"
-            >
-              <span className="inline-block text-sm font-semibold tracking-wider uppercase text-dental-teal mb-3">
-                Contact Us
-              </span>
-              <h1
-                className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6"
-                style={{ fontFamily: "'Outfit', sans-serif" }}
-              >
-                Get in <span className="gradient-text">Touch</span>
-              </h1>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Have questions? We&apos;d love to hear from you. Reach out and our
-                team will get back to you within 24 hours.
-              </p>
-            </motion.div>
-
-            <div className="grid lg:grid-cols-5 gap-8">
+            <div ref={ref} className="grid lg:grid-cols-5 gap-8">
               {/* Contact Form */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}

@@ -26,6 +26,7 @@ import { services, serviceCategories, type Service } from "@/lib/data";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
+import PageHero from "@/components/sections/PageHero";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   SmilePlus,
@@ -50,36 +51,17 @@ export default function ServicesPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-20 sm:pt-24">
-        <section className="relative py-24 bg-muted/30">
+      <PageHero
+        title="Our Services"
+        subtitle="From routine check-ups to complex oral surgery, we offer comprehensive dental care"
+      />
+      <main className="min-h-screen">
+        <section className="relative py-12 bg-muted/30">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(13,148,136,0.04),transparent_70%)]" />
 
           <div className="section-padding relative">
-            {/* Section Header */}
-            <motion.div
-              ref={ref}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-12"
-            >
-              <span className="inline-block text-sm font-semibold tracking-wider uppercase text-dental-teal mb-3">
-                Our Services
-              </span>
-              <h1
-                className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6"
-                style={{ fontFamily: "'Outfit', sans-serif" }}
-              >
-                Comprehensive <span className="gradient-text">Dental Care</span>
-              </h1>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                From routine check-ups to complex oral surgery, we offer a full
-                range of dental services to keep your smile healthy and beautiful.
-              </p>
-            </motion.div>
-
             {/* Filter Tabs */}
-            <motion.div
+            <motion.div ref={ref}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 }}

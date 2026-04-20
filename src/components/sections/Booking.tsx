@@ -198,9 +198,6 @@ export default function Booking() {
                         }`}
                       >
                         <p className="font-semibold text-sm">{s.title}</p>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          {s.priceHint}
-                        </p>
                       </button>
                     ))}
                   </div>

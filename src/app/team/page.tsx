@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
+import PageHero from "@/components/sections/PageHero";
 
 export default function TeamPage() {
   const router = useRouter();
@@ -23,36 +24,17 @@ export default function TeamPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-20 sm:pt-24">
-        <section className="relative py-24">
+      <PageHero
+        title="Our Dream Team"
+        subtitle="Meet our experienced dentists dedicated to your smile"
+      />
+      <main className="min-h-screen">
+        <section className="relative py-12 bg-muted/30">
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_left,rgba(13,148,136,0.04),transparent_50%)]" />
 
           <div className="section-padding relative">
-            {/* Header */}
-            <motion.div
-              ref={ref}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-16"
-            >
-              <span className="inline-block text-sm font-semibold tracking-wider uppercase text-dental-teal mb-3">
-                Our Team
-              </span>
-              <h1
-                className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6"
-                style={{ fontFamily: "'Outfit', sans-serif" }}
-              >
-                Meet Our <span className="gradient-text">Specialists</span>
-              </h1>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Our team of experienced dental professionals is dedicated to
-                providing you with the highest quality care.
-              </p>
-            </motion.div>
-
             {/* Doctors Grid */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div ref={ref} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {doctors.map((doctor, i) => (
                 <motion.div
                   key={doctor.id}

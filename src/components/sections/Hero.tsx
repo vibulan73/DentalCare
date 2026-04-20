@@ -20,7 +20,7 @@ export default function Hero() {
     <section
       ref={containerRef}
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 lg:pt-0"
     >
       {/* Parallax Background */}
       <motion.div style={{ y }} className="absolute inset-0 z-0">
@@ -67,7 +67,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8 mt-10 lg:mt-0"
         >
           <Trophy className="w-4 h-4 text-dental-gold" />
           <span className="text-sm font-medium text-slate-800">

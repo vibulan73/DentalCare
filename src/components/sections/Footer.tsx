@@ -1,6 +1,6 @@
 "use client";
 
-import { Phone, MapPin, ArrowUp } from "lucide-react";
+import { Phone, MapPin } from "lucide-react";
 import { locations, services } from "@/lib/data";
 import Link from "next/link";
 
@@ -16,9 +16,6 @@ const quickLinks = [
 ];
 
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   return (
     <footer className="relative bg-slate-900 text-white">
@@ -155,14 +152,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Scroll to Top */}
-      <button
-        onClick={scrollToTop}
-        className="fixed bottom-24 right-6 w-10 h-10 rounded-full gradient-teal text-white flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition-all z-40"
-        aria-label="Scroll to top"
-      >
-        <ArrowUp className="w-5 h-5" />
-      </button>
     </footer>
   );
 }

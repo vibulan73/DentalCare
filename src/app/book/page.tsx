@@ -6,9 +6,6 @@ import Booking from "@/components/sections/Booking";
 import Footer from "@/components/sections/Footer";
 
 // Dynamic imports for smart features (client-only)
-const StickyCTA = dynamic(() => import("@/components/smart/StickyCTA"), {
-  ssr: false,
-});
 
 export default function BookingPage() {
   return (
@@ -20,7 +17,6 @@ export default function BookingPage() {
       <Footer />
 
       {/* Smart Features */}
-      <StickyCTA />
     </>
   );
 }

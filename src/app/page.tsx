@@ -13,9 +13,6 @@ import Blog from "@/components/sections/Blog";
 import Footer from "@/components/sections/Footer";
 
 // Dynamic imports for smart features (client-only)
-const StickyCTA = dynamic(() => import("@/components/smart/StickyCTA"), {
-  ssr: false,
-});
 const ExitIntent = dynamic(() => import("@/components/smart/ExitIntent"), {
   ssr: false,
 });
@@ -37,7 +34,6 @@ export default function HomePage() {
       <Footer />
 
       {/* Smart Features */}
-      <StickyCTA />
       <ExitIntent />
     </>
   );

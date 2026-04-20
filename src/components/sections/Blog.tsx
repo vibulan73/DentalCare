@@ -27,7 +27,7 @@ export default function Blog() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section id="blog" className="relative py-24 bg-muted/30">
+    <section id="blog" className="relative py-12 bg-muted/30">
       <div className="section-padding">
         {/* Header */}
         <motion.div

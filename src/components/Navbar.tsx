@@ -2,27 +2,29 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Menu, Phone, CalendarDays } from "lucide-react";
+import { Menu, Phone, CalendarDays, ChevronDown } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle } from "@/components/ui/sheet";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
+import { locations } from "@/lib/data";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
+  { label: "Home", href: "/" },
   { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Team", href: "#team" },
-  { label: "Locations", href: "#locations" },
-  { label: "Gallery", href: "#gallery" },
+  { label: "Services", href: "/services" },
+  { label: "Team", href: "/team" },
+  { label: "Office Hours", href: "#locations" },
+  { label: "Gallery", href: "/gallery" },
   { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [phoneDropdownOpen, setPhoneDropdownOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -49,11 +51,24 @@ export default function Navbar() {
   }, []);
 
   const scrollToSection = (href: string) => {
-    const id = href.replace("#", "");
-    if (pathname === "/") {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    if (href === "/") {
+      // Home link - always scroll to top
+      if (pathname === "/") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        router.push("/");
+      }
+    } else if (href.startsWith("#")) {
+      // Hash link - scroll to section
+      const id = href.replace("#", "");
+      if (pathname === "/") {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        router.push("/" + href);
+      }
     } else {
-      router.push("/" + href);
+      // Page route
+      router.push(href);
     }
   };
 
@@ -65,19 +80,15 @@ export default function Navbar() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? "glass shadow-lg"
-          : "bg-transparent"
+          : pathname === "/" ? "bg-transparent" : "glass shadow-lg"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
-          <a
-            href="#home"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("#home");
-            }}
-            className="flex items-center gap-2 group"
+          <button 
+            onClick={() => scrollToSection("/")} 
+            className="flex items-center gap-2 group hover:opacity-80 transition-opacity"
           >
             <div className="w-9 h-9 rounded-lg gradient-teal flex items-center justify-center group-hover:scale-110 transition-transform">
               <span className="text-white text-lg">🦷</span>
@@ -85,7 +96,7 @@ export default function Navbar() {
             <div className="hidden sm:block">
               <p
                 className={`text-sm font-bold leading-tight transition-colors ${
-                  scrolled ? "text-foreground" : "text-white"
+                  scrolled || pathname !== "/" ? "text-foreground" : "text-white"
                 }`}
                 style={{ fontFamily: "'Outfit', sans-serif" }}
               >
@@ -93,13 +104,13 @@ export default function Navbar() {
               </p>
               <p
                 className={`text-[10px] transition-colors ${
-                  scrolled ? "text-muted-foreground" : "text-white/70"
+                  scrolled || pathname !== "/" ? "text-muted-foreground" : "text-white/70"
                 }`}
               >
                 Orthodontics & General
               </p>
             </div>
-          </a>
+          </button>
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-1">
@@ -113,10 +124,10 @@ export default function Navbar() {
                 }}
                 className={`relative px-3 py-2 text-sm font-medium transition-colors rounded-lg ${
                   activeSection === link.href.replace("#", "")
-                    ? scrolled
+                    ? scrolled || pathname !== "/"
                       ? "text-dental-teal"
                       : "text-white"
-                    : scrolled
+                    : scrolled || pathname !== "/"
                     ? "text-muted-foreground hover:text-foreground"
                     : "text-white/70 hover:text-white"
                 }`}
@@ -135,20 +146,49 @@ export default function Navbar() {
 
           {/* Right Side */}
           <div className="flex items-center gap-3">
-            <a
-              href="tel:416-292-7004"
-              className={cn(
-                buttonVariants({ variant: "ghost", size: "sm" }),
-                `hidden sm:inline-flex gap-1.5 rounded-xl ${
-                  scrolled
-                    ? "text-foreground hover:bg-muted"
-                    : "text-white hover:bg-white/10"
-                }`
+            {/* Phone Dropdown */}
+            <div className="relative hidden sm:inline-flex">
+              <button
+                onClick={() => setPhoneDropdownOpen(!phoneDropdownOpen)}
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "sm" }),
+                  `gap-1.5 rounded-xl ${
+                    scrolled || pathname !== "/"
+                      ? "text-foreground hover:bg-muted"
+                      : "text-white hover:bg-white/10"
+                  }`
+                )}
+              >
+                <Phone className="w-4 h-4" />
+                <span className="hidden md:inline">Call Us</span>
+                <ChevronDown className="w-3 h-3" />
+              </button>
+
+              {/* Dropdown Menu */}
+              {phoneDropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute top-full right-0 mt-2 w-56 bg-card border border-border rounded-xl shadow-lg z-50"
+                  onMouseLeave={() => setPhoneDropdownOpen(false)}
+                >
+                  {locations.map((location) => (
+                    <a
+                      key={location.id}
+                      href={`tel:${location.phone}`}
+                      className="flex items-center justify-between px-4 py-3 hover:bg-muted transition-colors first:rounded-t-xl last:rounded-b-xl"
+                    >
+                      <div>
+                        <p className="text-sm font-semibold">{location.name}</p>
+                        <p className="text-xs text-muted-foreground">{location.phone}</p>
+                      </div>
+                      <Phone className="w-4 h-4 text-dental-teal" />
+                    </a>
+                  ))}
+                </motion.div>
               )}
-            >
-              <Phone className="w-4 h-4" />
-              <span className="hidden md:inline">416-292-7004</span>
-            </a>
+            </div>
 
             <Link href="/book">
               <Button
@@ -167,11 +207,11 @@ export default function Navbar() {
                   <button
                     className={cn(
                       "lg:hidden w-9 h-9 rounded-lg flex items-center justify-center transition-colors",
-                      scrolled ? "hover:bg-muted" : "hover:bg-white/10"
+                      scrolled || pathname !== "/" ? "hover:bg-muted" : "hover:bg-white/10"
                     )}
                   >
                     <Menu
-                      className={cn("w-5 h-5", scrolled ? "text-foreground" : "text-white")}
+                      className={cn("w-5 h-5", scrolled || pathname !== "/" ? "text-foreground" : "text-white")}
                     />
                   </button>
                 }
@@ -236,13 +276,20 @@ export default function Navbar() {
                         </Link>
                       }
                     />
-                    <a
-                      href="tel:416-292-7004"
-                      className={cn(buttonVariants({ variant: "outline" }), "w-full rounded-xl")}
-                    >
-                      <Phone className="w-4 h-4 mr-2" />
-                      Call: 416-292-7004
-                    </a>
+                    {/* Phone Options */}
+                    <div className="space-y-2">
+                      <p className="text-xs font-semibold text-muted-foreground px-4">Phone</p>
+                      {locations.map((location) => (
+                        <a
+                          key={location.id}
+                          href={`tel:${location.phone}`}
+                          className={cn(buttonVariants({ variant: "outline" }), "w-full rounded-xl text-xs justify-start")}
+                        >
+                          <Phone className="w-4 h-4 mr-2" />
+                          {location.name}: {location.phone}
+                        </a>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </SheetContent>

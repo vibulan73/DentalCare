@@ -28,7 +28,7 @@ export default function Testimonials() {
   const t = testimonials[current];
 
   return (
-    <section id="testimonials" className="relative py-24 bg-muted/30 overflow-hidden">
+    <section id="testimonials" className="relative py-12 bg-muted/30 overflow-hidden">
       {/* Decorative */}
       <div className="absolute top-20 left-10 w-64 h-64 bg-dental-teal/5 rounded-full blur-3xl" />
       <div className="absolute bottom-20 right-10 w-64 h-64 bg-dental-blue/5 rounded-full blur-3xl" />

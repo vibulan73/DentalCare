@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
+import ChatbotWrapper from "@/components/smart/ChatbotWrapper";
 import "./globals.css";
 
 const inter = Inter({
@@ -107,7 +108,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col antialiased">{children}</body>
+      <body className="min-h-full flex flex-col antialiased">
+        {children}
+        <ChatbotWrapper />
+      </body>
     </html>
   );
 }

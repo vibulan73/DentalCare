@@ -4,85 +4,62 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import {
-  ExternalLink,
   CalendarDays,
-  ChevronRight,
+  ExternalLink,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { doctors } from "@/lib/data";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/sections/Footer";
 
-export default function Team() {
+export default function TeamPage() {
   const router = useRouter();
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
-  const [visible, setVisible] = useState(3);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) setVisible(3);
-      else if (window.innerWidth >= 640) setVisible(2);
-      else setVisible(1);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Limit to first 3 doctors on home page
-  const visibleDoctors = doctors.slice(0, 3);
-
   return (
-    <section id="team" className="relative py-12">
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_left,rgba(13,148,136,0.04),transparent_50%)]" />
+    <>
+      <Navbar />
+      <main className="min-h-screen pt-20 sm:pt-24">
+        <section className="relative py-24">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_left,rgba(13,148,136,0.04),transparent_50%)]" />
 
-      <div className="section-padding relative">
-        {/* Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <span className="inline-block text-sm font-semibold tracking-wider uppercase text-dental-teal mb-3">
-            Our Team
-          </span>
-          <h2
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6"
-            style={{ fontFamily: "'Outfit', sans-serif" }}
-          >
-            Meet Our <span className="gradient-text">Specialists</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Our team of experienced dental professionals is dedicated to
-            providing you with the highest quality care.
-          </p>
-        </motion.div>
-
-        {/* Carousel */}
-        <div className="relative">
-          {/* Cards Container */}
-          <div className="overflow-hidden mx-6">
+          <div className="section-padding relative">
+            {/* Header */}
             <motion.div
-              className="flex gap-6"
-              animate={{
-                x: `-${currentIndex * (100 / visible)}%`,
-              }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              ref={ref}
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-16"
             >
-              {visibleDoctors.map((doctor, i) => (
+              <span className="inline-block text-sm font-semibold tracking-wider uppercase text-dental-teal mb-3">
+                Our Team
+              </span>
+              <h1
+                className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6"
+                style={{ fontFamily: "'Outfit', sans-serif" }}
+              >
+                Meet Our <span className="gradient-text">Specialists</span>
+              </h1>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Our team of experienced dental professionals is dedicated to
+                providing you with the highest quality care.
+              </p>
+            </motion.div>
+
+            {/* Doctors Grid */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {doctors.map((doctor, i) => (
                 <motion.div
                   key={doctor.id}
                   initial={{ opacity: 0, y: 30 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className="shrink-0"
-                  style={{ width: `calc(${100 / visible}% - ${((visible - 1) * 24) / visible}px)` }}
+                  className="group"
                   onMouseEnter={() => setHoveredId(doctor.id)}
                   onMouseLeave={() => setHoveredId(null)}
                 >
@@ -156,21 +133,11 @@ export default function Team() {
                   </div>
                 </motion.div>
               ))}
-            </motion.div>
+            </div>
           </div>
-
-          {/* View All Button */}
-          <div className="flex justify-center mt-12">
-            <Button
-              onClick={() => router.push("/team")}
-              className="gradient-teal text-white border-0 rounded-xl px-8 py-6 btn-ripple hover:opacity-90 gap-2 text-base"
-            >
-              View All Team Members
-              <ChevronRight className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-      </div>
-    </section>
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 }

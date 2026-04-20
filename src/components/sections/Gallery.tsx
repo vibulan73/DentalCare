@@ -3,8 +3,10 @@
 import { useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { X, ZoomIn, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, ZoomIn, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 const galleryImages = [
   { id: 1, src: "/images/hero-bg.png", alt: "Modern Clinic Reception", category: "clinic" },
@@ -16,6 +18,7 @@ const galleryImages = [
 ];
 
 export default function Gallery() {
+  const router = useRouter();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [beforeAfterPos, setBeforeAfterPos] = useState(50);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -36,7 +39,7 @@ export default function Gallery() {
     handleSliderMove(e.touches[0].clientX);
 
   return (
-    <section id="gallery" className="relative py-24">
+    <section id="gallery" className="relative py-12">
       <div className="section-padding">
         {/* Header */}
         <motion.div
@@ -126,7 +129,7 @@ export default function Gallery() {
 
         {/* Masonry Grid */}
         <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-          {galleryImages.map((img, i) => (
+          {galleryImages.slice(0, 4).map((img, i) => (
             <motion.div
               key={img.id}
               initial={{ opacity: 0, scale: 0.9 }}
@@ -151,6 +154,17 @@ export default function Gallery() {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* View All Gallery Button */}
+        <div className="flex justify-center mt-12">
+          <Button
+            onClick={() => router.push("/gallery")}
+            className="gradient-teal text-white border-0 rounded-xl px-8 py-6 btn-ripple hover:opacity-90 gap-2 text-base"
+          >
+            View All Gallery
+            <ArrowRight className="w-4 h-4" />
+          </Button>
         </div>
       </div>
 

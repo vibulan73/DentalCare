@@ -78,7 +78,7 @@ export default function Locations() {
   const status = statuses[activeLoc.id] || { open: false, message: "Loading..." };
 
   return (
-    <section id="locations" className="relative py-24 bg-muted/30">
+    <section id="locations" className="relative py-12 bg-muted/30">
       <div className="section-padding relative">
         {/* Header */}
         <motion.div

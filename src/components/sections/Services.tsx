@@ -35,18 +35,14 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 };
 
 export default function Services() {
-  const [activeCategory, setActiveCategory] = useState("all");
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const router = useRouter();
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
-  const filtered =
-    activeCategory === "all"
-      ? services
-      : services.filter((s) => s.category === activeCategory);
+  const filtered = services.slice(0, 3);
 
   return (
-    <section id="services" className="relative py-24 bg-muted/30">
+    <section id="services" className="relative py-12 bg-muted/30">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(13,148,136,0.04),transparent_70%)]" />
 
       <div className="section-padding relative">
@@ -71,28 +67,6 @@ export default function Services() {
             From routine check-ups to complex oral surgery, we offer a full
             range of dental services to keep your smile healthy and beautiful.
           </p>
-        </motion.div>
-
-        {/* Filter Tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
-        >
-          {serviceCategories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeCategory === cat.id
-                  ? "gradient-teal text-white shadow-lg shadow-teal-500/25"
-                  : "bg-card border border-border text-muted-foreground hover:border-dental-teal/30 hover:text-foreground"
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
         </motion.div>
 
         {/* Service Cards Grid */}
@@ -139,11 +113,8 @@ export default function Services() {
                       {service.shortDescription}
                     </p>
 
-                    {/* Price & CTA */}
-                    <div className="flex items-center justify-between pt-4 border-t border-border">
-                      <span className="text-sm font-semibold text-dental-teal">
-                        {service.priceHint}
-                      </span>
+                    {/* CTA */}
+                    <div className="flex justify-end pt-4 border-t border-border">
                       <span className="text-sm font-medium text-muted-foreground group-hover:text-dental-teal flex items-center gap-1 transition-colors">
                         Learn More
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -154,6 +125,17 @@ export default function Services() {
               );
             })}
           </AnimatePresence>
+        </div>
+
+        {/* View All Services Button */}
+        <div className="flex justify-center mt-12">
+          <Button
+            onClick={() => router.push("/services")}
+            className="gradient-teal text-white border-0 rounded-xl px-8 py-6 btn-ripple hover:opacity-90 gap-2 text-base"
+          >
+            View All Services
+            <ArrowRight className="w-4 h-4" />
+          </Button>
         </div>
       </div>
 
@@ -180,9 +162,6 @@ export default function Services() {
                     >
                       {selectedService.title}
                     </DialogTitle>
-                    <DialogDescription className="text-dental-teal font-semibold">
-                      {selectedService.priceHint}
-                    </DialogDescription>
                   </div>
                 </div>
               </DialogHeader>

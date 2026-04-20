@@ -10,13 +10,9 @@ import Locations from "@/components/sections/Locations";
 import Gallery from "@/components/sections/Gallery";
 import Testimonials from "@/components/sections/Testimonials";
 import Blog from "@/components/sections/Blog";
-import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
 
 // Dynamic imports for smart features (client-only)
-const Chatbot = dynamic(() => import("@/components/smart/Chatbot"), {
-  ssr: false,
-});
 const StickyCTA = dynamic(() => import("@/components/smart/StickyCTA"), {
   ssr: false,
 });
@@ -37,12 +33,10 @@ export default function HomePage() {
         <Gallery />
         <Testimonials />
         <Blog />
-        <Contact />
       </main>
       <Footer />
 
       {/* Smart Features */}
-      <Chatbot />
       <StickyCTA />
       <ExitIntent />
     </>
